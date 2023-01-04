@@ -1,4 +1,4 @@
-from datetime import datetime
+from logging import getLogger
 
 from fastapi import Header, HTTPException, status
 from fastapi.security.utils import get_authorization_scheme_param
@@ -6,6 +6,8 @@ from fastapi.security.utils import get_authorization_scheme_param
 from pychat.user.models import User
 
 from ..utils import decode_token
+
+log = getLogger(__file__)
 
 
 async def get_current_user(authorization: str | None = Header(default=None)):
@@ -16,19 +18,20 @@ async def get_current_user(authorization: str | None = Header(default=None)):
 
     _, token = get_authorization_scheme_param(authorization)
     if not token:
+        log.debug("[AUTH] current_user no token")
         raise InvalidToken
 
     payload = decode_token(token)
 
-    now = datetime.utcnow()
-    exp = datetime.fromtimestamp(getattr(payload, "flick", 0))
-
-    if payload is None or not exp > now:
+    if payload is None:
+        log.warn("[AUTH] current_user token invalid")
         raise InvalidToken
 
     user = await User.get_or_none(id=payload.get("id"))
 
     if user is None:
+        log.warn("[USER] current_user token compromised")
         raise InvalidToken
 
+    log.debug(f"[USER] current_user fetched: {user.email}")
     return await user

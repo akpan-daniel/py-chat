@@ -3,6 +3,7 @@ from tortoise import Tortoise, fields
 from pychat.core.models import BaseModel
 
 
+# TODO: Create table to keep track of all login attempts
 class AuthToken(BaseModel):
     user = fields.OneToOneField(
         "user.User", related_name=None, on_delete=fields.CASCADE

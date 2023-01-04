@@ -26,6 +26,7 @@ class BaseSettings(BS):
 
     AUTH_ACCESS_TTL: int  # access token lifetime in minutes
     AUTH_REFRESH_TTL: int  # refresh token lifetime in minutes
+    AUTH_MAX_LOGIN_ATTEMPTS: int
 
     STRTFORMAT: str  # str format for datetime
 

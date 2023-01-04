@@ -1,6 +1,12 @@
 import pydantic
 
+from pychat.core.schemas import ORJSONModel
 
-class Signin(pydantic.BaseModel):
+
+class Signin(ORJSONModel):
     email: pydantic.EmailStr
     password: pydantic.SecretStr
+
+
+class RefreshToken(ORJSONModel):
+    refresh: str
