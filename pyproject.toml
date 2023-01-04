@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "pychat"
+version = "0.0.1"
+description = "A simple chatting API service"
+authors = ["Daniel Akpan <akpandaniel.n@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.88.0"
+uvicorn = {extras = ["standard"], version = "^0.20.0"}
+pydantic = {extras = ["email"], version = "^1.10.4"}
+tortoise-orm = {extras = ["accel", "asyncpg"], version = "^0.19.2"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+aerich = "^0.7.1"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+pre-commit = "^2.21.0"
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+
+
+[tool.aerich]
+tortoise_orm = "pychat.database.TORTOISE_ORM"
+location = "pychat/migrations"
+src_folder = "./."
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+ignore = ["B008"]
+max-line-length = 88
+exclude = ["*/migrations/*"]
