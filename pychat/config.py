@@ -30,6 +30,13 @@ class BaseSettings(BS):
 
     STRTFORMAT: str  # str format for datetime
 
+    MAIL_HOST: str
+    MAIL_PORT: str
+    MAIL_PASS: str
+    MAIL_USER: str
+    MAIL_FROM: str
+    MAIL_TLS: bool = False
+
     class Config:
         env_file = BASE_DIR / "env/base.env"
         case_insensitive = True

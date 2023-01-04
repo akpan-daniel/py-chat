@@ -27,10 +27,11 @@ async def get_current_user(authorization: str | None = Header(default=None)):
         log.warn("[AUTH] current_user token invalid")
         raise InvalidToken
 
-    user = await User.get_or_none(id=payload.get("id"))
+    payload.pop("exp")
+    user = await User.get_or_none(**payload)
 
     if user is None:
-        log.warn("[USER] current_user token compromised")
+        log.warn(f"[USER] current_user token compromised {payload.get('email')}")
         raise InvalidToken
 
     log.debug(f"[USER] current_user fetched: {user.email}")
