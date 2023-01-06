@@ -35,3 +35,8 @@ class NotFound(InternalError):
 class PermissionDenied(InternalError):
     CODE = status.HTTP_403_FORBIDDEN
     DETAIL = "Permission denied"
+
+
+class Conflict(InternalError):
+    CODE = status.HTTP_409_CONFLICT
+    DETAIL = "Conflict"

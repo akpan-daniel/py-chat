@@ -30,7 +30,7 @@ class HashBaseModel(BaseModel):
         field = self.Meta.hash_field
         klass = self.__class__.__name__
 
-        if not field or isinstance(field, str):
+        if not (field and isinstance(field, str)):
             raise TypeError(f"Invalid field type {type(field)} for {klass}")
         if not hasattr(self, self.Meta.hash_field):
             raise AttributeError(

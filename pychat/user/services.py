@@ -15,7 +15,7 @@ async def create_user(user_in: input.UserCreate) -> User | None:
         first_name=user_in.first_name,
         last_name=user_in.last_name,
     )
-    user.make_password(user_in.password.get_secret_value())
+    user.set_hash_field(user_in.password.get_secret_value())
     try:
         await user.save()
         log.info(f"[USER] create successful: {user.email}")

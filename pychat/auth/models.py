@@ -1,6 +1,6 @@
-from typing import Any, Type
+from typing import Type
 
-from tortoise import Tortoise, fields
+from tortoise import BaseDBAsyncClient, Tortoise, fields
 from tortoise.signals import post_save
 
 from pychat.config import settings
@@ -29,7 +29,11 @@ class AuthToken(BaseModel):
 
 @post_save(User)
 async def create_auth_token(
-    sender: "Type[User]", instance: User, created: bool, **kwargs: dict[str, Any]
+    sender: "Type[User]",
+    instance: User,
+    created: bool,
+    using_db: "BaseDBAsyncClient | None",
+    update_fields: list[str],
 ) -> None:
     if created:
         await AuthToken.create(user=instance)
