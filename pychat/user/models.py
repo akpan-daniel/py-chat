@@ -2,8 +2,8 @@ from tortoise import Tortoise, fields
 
 from pychat.config import settings
 from pychat.core.models import BaseModel
+from pychat.core.utils import is_password, make_password
 
-from .utils import is_password, make_password
 from .validators import EmailValidator
 
 
